@@ -3,7 +3,7 @@ from http.server import HTTPServer
 from pysimplesoap.server import SoapDispatcher, SOAPHandler
 
 client = Client(
-    "https://www.dataaccess.com/webservicesserver/NumberConversion.wso?WSDL
+    "https://www.dataaccess.com/webservicesserver/NumberConversion.wso?WSDL"
 ) 
 
 Result = client.serviceNumberToWords(5) 
@@ -30,4 +30,4 @@ dispatcher.register_function(
 server=HTTPServer(("0.0.0.0",8000), SOAPHandler)
 server.dispatcher=dispatcher
 print("Server SOAP iniciado en http://localhost:8000/")
-sevre.serve_forever()
+sever.serve_forever()

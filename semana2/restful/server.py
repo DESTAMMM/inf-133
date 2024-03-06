@@ -10,14 +10,20 @@ estudiantes = [
     },
 ]
 
-
 class RESTRequestHandler(BaseHTTPRequestHandler):
+    def response_handler(self,status_code, data):
+        self.send_response(status_code)
+        self.send_header("Content-type", "application/json")
+        self.end_headers()
+        self.wfile.write(json.dumps(data).encode("utf-8"))
+
     def do_GET(self):
         if self.path == "/estudiantes":
-            self.send_response(200)
+            self.response_handler(200,estudiantes)
+            '''self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
+            self.wfile.write(json.dumps(estudiantes).encode("utf-8"))'''
         elif self.path.startswith("/estudiantes/"):
             id = int(self.path.split("/")[-1])
             estudiante = next(
@@ -25,16 +31,17 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                 None,
             )
             if estudiante:
-                self.send_response(200)
+                self.response_handler(200,estudiantes)
+                '''self.send_response(200)
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dumps(estudiante).encode("utf-8"))
-
+                self.wfile.write(json.dumps(estudiante).encode("utf-8"))'''
         else:
-            self.send_response(404)
+            self.response_handler(400,{"Error": "Ruta no existente"})
+            '''self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
+            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))'''
 
     def do_POST(self):
         if self.path == "/estudiantes":
@@ -43,16 +50,17 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             post_data = json.loads(post_data.decode("utf-8"))
             post_data["id"] = len(estudiantes) + 1
             estudiantes.append(post_data)
-            self.send_response(201)
+            self.response_handler(201,estudiantes)
+            '''self.send_response(201)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
-
+            self.wfile.write(json.dumps(estudiantes).encode("utf-8"))'''
         else:
-            self.send_response(404)
+            self.response_handler(404,{"Error": "Ruta no existente"})
+            '''self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
+            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))'''
 
     def do_PUT(self):
         if self.path.startswith("/estudiantes"):
@@ -66,15 +74,17 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             )
             if estudiante:
                 estudiante.update(data)
-                self.send_response(200)
+                self.response_handler(200,estudiante)
+                '''self.send_response(200)
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
-                self.wfile.write(json.dumps(estudiante).encode("utf-8"))
+                self.wfile.write(json.dumps(estudiante).encode("utf-8"))'''
         else:
-            self.send_response(404)
+            self.response_handler(404,{"Error": "Ruta no existente"})
+            '''self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
+            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))'''
 
     def do_DELETE(self):
         if self.path == "/estudiantes":
@@ -84,11 +94,11 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             estudiantes.clear()
             self.wfile.write(json.dumps(estudiantes).encode("utf-8"))
         else:
-            self.send_response(404)
+            self.response_handler(404,{"Error": "Ruta no existente"})
+            '''self.send_response(404)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))
-
+            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode("utf-8"))'''
 
 def run_server(port=8000):
     try:
