@@ -2,7 +2,7 @@ import requests
 
 query = """
     {
-        estudiante(id:1, nombre){
+        estudiante(nombre, id:2){
             nombre
         }
         estudiante(id:2,nombre, apellido){
