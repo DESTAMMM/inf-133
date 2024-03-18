@@ -12,8 +12,10 @@ class Player:
         return cls._instance
     def to_dict(self):
         return{"name": self.name, "health":self.health}
+    
     def take_damage(self, damage):
         self.health=self.health-damage
+        
 class PlayerHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/player":
