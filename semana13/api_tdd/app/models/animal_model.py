@@ -1,4 +1,4 @@
-from database import db
+from app.database import db
 
 
 # Define la clase `Animal` que hereda de `db.Model`
