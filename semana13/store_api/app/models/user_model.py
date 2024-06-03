@@ -5,9 +5,8 @@ from werkzeug.security import generate_password_hash
 
 from app.database import db
 
-
 class User(UserMixin, db.Model):
-    __tablename__ = "users"
+    __tablename__="Usuarios"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)

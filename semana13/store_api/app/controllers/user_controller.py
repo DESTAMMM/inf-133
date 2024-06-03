@@ -6,7 +6,6 @@ from app.models.user_model import User
 
 user_bp = Blueprint("user", __name__)
 
-
 @user_bp.route("/register", methods=["POST"])
 def register():
     data = request.json
@@ -35,7 +34,6 @@ def login():
 
     user = User.find_by_username(username)
     if user and check_password_hash(user.password_hash, password):
-
         access_token = create_access_token(
             identity={"username": username, "roles": user.roles}
         )
